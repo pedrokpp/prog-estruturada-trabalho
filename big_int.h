@@ -20,6 +20,7 @@ typedef struct BIG_INT {
     DIGIT* tail;
 } BIG_INT;
 
+// Coloca um elemento no final da lista
 void append(BIG_INT* bi, int value) {
     DIGIT* d = newDigit(value);
     if (bi->length == 0) {
@@ -31,8 +32,26 @@ void append(BIG_INT* bi, int value) {
         DIGIT* tail = bi->tail;
         tail->next = d;
         d->prev = tail;
-        bi->tail = d;
         d->next = bi->head;
+        bi->tail = d;
+    }
+    bi->length++;
+}
+
+// Coloca um elemento no início da lista
+void insert(BIG_INT* bi, int value) {
+    DIGIT* d = newDigit(value);
+    if (bi->length == 0) {
+        d->next = d;
+        d->prev = d;
+        bi->head = d;
+        bi->tail = d;
+    } else {
+        DIGIT* tail = bi->tail;
+        tail->next = d;
+        d->prev = tail;
+        d->next = bi->head;
+        bi->head = d;
     }
     bi->length++;
 }
