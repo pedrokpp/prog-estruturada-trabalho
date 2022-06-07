@@ -16,12 +16,14 @@ void insertLast(LLIST* ll, int value) {
         current = current->next;
     }
     last->next = node;
+    ll->length++;
 }
 
 void insertFirst(LLIST* ll, int value) {
     NODE* node = newNode(value);
     node->next = ll->head;
     ll->head = node;
+    ll->length++;
 }
 
 int pop(LLIST* ll, int value) {
@@ -34,6 +36,7 @@ int pop(LLIST* ll, int value) {
                 last->next = current->next;
             else
                 ll->head = current->next;
+            ll->length--;
             res++;
         }
         last = current;
