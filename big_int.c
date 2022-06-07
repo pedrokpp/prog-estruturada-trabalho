@@ -1,7 +1,11 @@
 #include "big_int.h"
 
 int main(void) {
-    BIG_INT* bi = parseString("1999");
+    BIG_INT* bi = parseString("12312312312312389890123123120381203123123");
+    if (!bi) {
+        printf("Caractere não numérico enviado como número!\n");
+        return -1;
+    }
     printf("Lista (%d): ", bi->length);
     printNumber(bi);
 }
@@ -32,6 +36,8 @@ void append(BIG_INT* bi, int value) {
 BIG_INT* parseString(char* number) {
     BIG_INT* bi = malloc(sizeof(BIG_INT));
     for (int i = 0; i < strlen(number); i++) {
+        if (!(number[i] >= '0' && number[i] <= '9'))
+            return NULL;
         int num = number[i] - '0';
         append(bi, num);
     }
