@@ -3,7 +3,7 @@ Trabalho Computacional: implementação de números inteiros gigantes (isto é, 
 
 Operações válidas: soma (+), subtração (-), multiplicação (*), divisão (/) e resto (%).
 
-Grupos: Pedro Kozlowski e Felipe Beletti
+Grupos: Pedro Kozlowski e Felipe Belletti
 
 ## Testes:
 
