@@ -1,11 +1,35 @@
 #include "big_int.h"
 
-int main(void) {
-    BIG_INT* bi1 = parseString("1000001");
-    printNumber(bi1);
-    BIG_INT* bi2 = parseString("101");
-    printf("-");
-    printNumber(bi2);
-    BIG_INT* res = sub(bi1, bi2);
-    printNumber(res);
+int main(void){
+  while (1) {
+    char str1[1000], str2[1000], op;
+    printf("Digite o numero a operacao e o outro numero ... ");
+    scanf("%s", str1);
+    scanf(" %c", &op);
+    scanf("%s", str2);
+    if ((op != '+') && (op != '-') && (op != '*') && (op != '/') && (op != '%')) {
+      printf("ERRO: operador invalido!\n");
+      printf("Quer continuar (digite 0 para sair)? "); 
+      scanf(" %c", &op);
+      if(op == '0') return 0;
+      continue;
+    }
+    BIG_INT *num1 = parseString(str1), *num2 = parseString(str2), *resp;
+    if (op == '+') resp = add(num1, num2);
+    else if (op == '-') resp = sub(num1, num2);
+    // else if(op == '*') resp = mult(num1, num2);
+    // else if(op == '/') resp = div(num1, num2);
+    // else resp = mod(num1, num2);
+
+    printf("%s %c %s = ", str1, op, str2);
+    TBIGNUM_imprime(resp);
+
+    // TBIGNUM_libera(num1);
+    // TBIGNUM_libera(num2);
+    // TBIGNUM_libera(resp);
+
+    printf("Quer continuar (digite 0 para sair)? "); 
+    scanf(" %c", &op);
+    if(op == '0') return 0;
+  }
 }
