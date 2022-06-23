@@ -4,3 +4,4 @@
 *.out
 *.exe
 tests.c
+.vscode*
