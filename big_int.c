@@ -1,4 +1,6 @@
 #include "big_int.h"
+#include "soma.h"
+#include "subt.h"
 
 int main(void){
   while (1) {
@@ -15,18 +17,18 @@ int main(void){
       continue;
     }
     BIG_INT *num1 = parseString(str1), *num2 = parseString(str2), *resp;
-    if (op == '+') resp = add(num1, num2);
-    else if (op == '-') resp = sub(num1, num2);
+    if (op == '+') resp = soma(num1, num2);
+    else if (op == '-') resp = subt(num1, num2);
     // else if(op == '*') resp = mult(num1, num2);
     // else if(op == '/') resp = div(num1, num2);
     // else resp = mod(num1, num2);
 
     printf("%s %c %s = ", str1, op, str2);
-    TBIGNUM_imprime(resp);
+    printNumber(resp);
 
-    // TBIGNUM_libera(num1);
-    // TBIGNUM_libera(num2);
-    // TBIGNUM_libera(resp);
+    freeNumber(num1);
+    freeNumber(num2);
+    freeNumber(resp);
 
     printf("Quer continuar (digite 0 para sair)? "); 
     scanf(" %c", &op);
