@@ -12,7 +12,8 @@ BIG_INT* soma(BIG_INT* bi1, BIG_INT* bi2) {
 
     do {
         if (!c_small) {
-            insert(res, c_big->value);
+            if (c_big->value != 0)
+                insert(res, c_big->value);
         } else {
             int result = c_big->value + c_small->value + carry;
             carry = 0;
@@ -30,6 +31,9 @@ BIG_INT* soma(BIG_INT* bi1, BIG_INT* bi2) {
             c_small = c_small->prev == smaller->tail ? NULL : c_small->prev;
         c_big = c_big->prev;
     } while(c_big != bigger->tail);
+
+    freeNumber(bigger);
+    freeNumber(smaller);
 
     return res;
 }
