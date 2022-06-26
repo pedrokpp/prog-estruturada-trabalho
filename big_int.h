@@ -69,6 +69,7 @@ BIG_INT* parseString(char* number) {
 }
 
 void printNumber(BIG_INT* bi) {
+    printf("cc");
     DIGIT* current = bi->head;
     if (!current) {
         printf("Número vazio\n");
@@ -159,9 +160,60 @@ int intArraySum(int _array[]) {
     return ret;
 }
 
+BIG_INT* getHigher(BIG_INT *b1, BIG_INT *b2) {
+    if(b1->length > b2->length) {
+        return b1;
+    }
+    if(b2->length > b1->length) {
+        return b2;
+    }
+
+    // equal
+    DIGIT *c1 = b1->head;
+    DIGIT *c2 = b2->head;
+    
+    for(int i = 0; i < b1->length ; i++) {
+        if(c1->value > c2->value) {
+            return b1;
+        }
+        if(c1->value < c2->value) {
+            return b2;
+        }
+
+        c1 = c1->next;
+        c2 = c2->next;
+    }
+}
+
+BIG_INT* getLower(BIG_INT *b1, BIG_INT *b2) {
+    if(b1->length > b2->length) {
+        return b1;
+    }
+    if(b2->length > b1->length) {
+        return b2;
+    }
+
+    // equal
+    DIGIT *c1 = b1->head;
+    DIGIT *c2 = b2->head;
+    
+    for(int i = 0; i < b1->length ; i++) {
+        if(c1->value > c2->value) {
+            return b2;
+        }
+        if(c1->value < c2->value) {
+            return b1;
+        }
+
+        c1 = c1->next;
+        c2 = c2->next;
+    }
+}
+
 void mult(BIG_INT* big1, BIG_INT* big2) {
     DIGIT* current1 = big1->tail;
-    DIGIT* current2 = big2->tail;e res
+    DIGIT* current2 = big2->tail;
+    printf("aa\n");
     int lowFactor = 0; int upFactor = 0;
     int thisMultRes = 0;
 
@@ -182,9 +234,16 @@ void mult(BIG_INT* big1, BIG_INT* big2) {
             upFactor = 0;
         }
 
-        if(thisMultRes >= 10 && !current1 == big1->tail) {
+        if(thisMultRes >= 10) {
             upFactor = floor(thisMultRes / 10);
+            //lowfactor = current1 == big1->head ? thisMultRes : thisMultRes % 10;
             lowFactor = thisMultRes % 10;
+            //printf("current: %d | big1->head: %d\n\n", current1, big1->head);
+            if(current1 == big1->head) {
+                lowFactor = thisMultRes;
+            } else {
+                lowFactor = thisMultRes % 10;
+            }
         }
 
         partialResultCache[partialResultCacheIdx] = lowFactor;
@@ -195,7 +254,7 @@ void mult(BIG_INT* big1, BIG_INT* big2) {
         if(current1 == big1->tail) { // iterou o elemento 1 inteiro
             int sizeOrder = 1;
             
-            if(partialResultCacheIdx == 1) { // caso so tenha 1 item no partialResultCache
+            if(partialResultCacheIdx == 0) { // caso so tenha 1 item no partialResultCache
                 resultCache[resultCacheIdx] = partialResultCache[partialResultCacheIdx] * sizeOrder;
             } else {
                 memset(tempStringBuffer0, 0, sizeof(tempStringBuffer0));
