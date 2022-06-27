@@ -5,7 +5,7 @@ int main(void) {
     TODO: se int(big1) < int(big2) > err, resposta errada
     */
     BIG_INT* big1 = parseString("150");
-    BIG_INT* big2 = parseString("10");
+    BIG_INT* big2 = parseString("31");
 
     //BIG_INT* higher = getHigher(big1, big2);
     //printf("dd");

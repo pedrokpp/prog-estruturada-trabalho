@@ -9,6 +9,47 @@ typedef struct node {
     struct node* prev;
 } DIGIT;
 
+char *reverse(char *str)
+{
+    char tmp, *src, *dst;
+    size_t len;
+    if (str != NULL)
+    {
+        len = strlen (str);
+        if (len > 1) {
+            src = str;
+            dst = src + len - 1;
+            while (src < dst) {
+                tmp = *src;
+                *src++ = *dst;
+                *dst-- = tmp;
+            }
+        }
+    }
+    return str;
+}
+
+/* itoa from K&R */
+char* itoa(int n, char s[])
+{
+    int i, sign;
+
+    if ((sign = n) < 0)        /* record sign */
+        n = -n;                /* make n positive */
+    i = 0;
+
+    do {                       /* generate digits in reverse order */
+        s[i++] = n % 10 + '0'; /* get next digit */
+    } while ((n /= 10) > 0);   /* delete it */
+
+    if (sign < 0)
+        s[i++] = '-';
+
+    reverse(s);
+    s[i] = '\0';
+    return s;
+}
+
 DIGIT* newDigit(int value) {
     DIGIT* d = malloc(sizeof(DIGIT));
     d->value = value;
@@ -224,10 +265,8 @@ void mult(BIG_INT* big1, BIG_INT* big2) {
     int thisMultRes = 0;
 
     int resultCache[1024];
-    int partialResultCacheIdx = 0;
+    int resultCacheIdx = 0;
     int iteratedLevel = 1;
-    char tempStringBuffer0[1024];
-    char tempStringBuffer1[1024];
     int casaLevel = 1;
 
     do {
@@ -251,9 +290,9 @@ void mult(BIG_INT* big1, BIG_INT* big2) {
             }
         }
 
-        resultCache[partialResultCacheIdx] = lowFactor * casaLevel * iteratedLevel;
+        resultCache[resultCacheIdx] = lowFactor * casaLevel * iteratedLevel;
         casaLevel *= 10;
-        partialResultCacheIdx++;
+        resultCacheIdx++;
 
         printf("%d * %d = %d | lowFactor = %d | upFactor = %d | Inserindo %d na resposta\n", current1->value, current2->value, thisMultRes, lowFactor, upFactor, lowFactor);
         current1 = current1->prev;
@@ -267,11 +306,27 @@ void mult(BIG_INT* big1, BIG_INT* big2) {
         }
     } while(1);
 
-    for(int i = partialResultCacheIdx - 1; i >= 0; i--) {
+    for(int i = resultCacheIdx - 1; i >= 0; i--) {
         printf("> %d\n", resultCache[i]);
     }
-    insert(res, intArraySum(resultCache, partialResultCacheIdx));
+
+
+    BIG_INT *resBigInt = parseString("0");
+    BIG_INT *tmp = parseString("1");
+    /*
+    char s[1024];
+    for(int i = 0; i < resultCacheIdx; i++) {
+        itoa(resultCache[i], s);
+        
+        //printf("S: %s\n", s);
+        add(tmp, parseString(s));
+        memset(s, 0, 1024);
+    }
+    */
+
+    insert(res, intArraySum(resultCache, resultCacheIdx));
 
     //printf("Final res: %d\n", intArraySum(resultCache));
     printNumber(res);
+    //printNumber(tmp);
 }
