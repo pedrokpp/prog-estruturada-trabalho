@@ -25,7 +25,6 @@ BIG_INT* subt(BIG_INT* bi1, BIG_INT* bi2) {
                     tmp->value = 9;
                     tmp = tmp->prev;
                 }
-                free(tmp);
                 insert(res, (10 + c_big->value) - c_small->value);
             } else {
                 insert(res, c_big->value - c_small->value);
@@ -36,9 +35,6 @@ BIG_INT* subt(BIG_INT* bi1, BIG_INT* bi2) {
             c_small = c_small->prev == smaller->tail ? NULL : c_small->prev;
         c_big = c_big->prev;
     } while(c_big != bigger->tail);
-    
-    freeNumber(bigger);
-    freeNumber(smaller);
 
     return res;
 }

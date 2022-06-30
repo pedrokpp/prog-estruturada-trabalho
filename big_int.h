@@ -60,7 +60,7 @@ void insert(BIG_INT* bi, int value) {
 
 BIG_INT* parseString(char* number) {
     BIG_INT* bi = malloc(sizeof(BIG_INT));
-    for (int i = 0; i < strlen(number); i++) {
+    for (int i = 0; i < (int)strlen(number); i++) {
         if (!(number[i] >= '0' && number[i] <= '9'))
             return NULL;
         int num = number[i] - '0';

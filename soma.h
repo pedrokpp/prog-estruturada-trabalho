@@ -32,8 +32,5 @@ BIG_INT* soma(BIG_INT* bi1, BIG_INT* bi2) {
         c_big = c_big->prev;
     } while(c_big != bigger->tail);
 
-    freeNumber(bigger);
-    freeNumber(smaller);
-
     return res;
 }
