@@ -25,36 +25,28 @@ typedef struct BIG_INT {
 // Coloca um elemento no final da lista
 void append(BIG_INT* bi, int value) {
     DIGIT* d = newDigit(value);
-    if (bi->length == 0) {
-        d->next = d;
-        d->prev = d;
-        bi->head = d;
-        bi->tail = d;
-    } else {
+    d->prev = bi->tail;
+    if (bi->tail != NULL)
         bi->tail->next = d;
-        d->prev = bi->tail;
-        d->next = bi->head;
-        bi->tail = d;
-        bi->head->prev = bi->tail;
-    }
+    bi->tail = d;
+
+    if (bi->length == 0)
+        bi->head = bi->tail;
+
     bi->length++;
 }
 
 // Coloca um elemento no início da lista
 void insert(BIG_INT* bi, int value) {
     DIGIT* d = newDigit(value);
-    if (bi->length == 0) {
-        d->next = d;
-        d->prev = d;
-        bi->head = d;
-        bi->tail = d;
-    } else {
-        bi->tail->next = d;
-        d->prev = bi->tail;
-        d->next = bi->head;
-        bi->head = d;
-        bi->head->prev = bi->tail;
-    }
+    d->next = bi->head;
+    if (bi->head != NULL) 
+        bi->head->prev = d;
+    bi->head = d;
+
+    if (bi->length == 0)
+        bi->tail = bi->head;
+
     bi->length++;
 }
 
@@ -65,7 +57,6 @@ BIG_INT* parseString(char* number) {
             return NULL;
         int num = number[i] - '0';
         append(bi, num);
-        bi->length++;
     }
     return bi;
 }
@@ -80,7 +71,7 @@ void printNumber(BIG_INT* bi) {
     do {
        printf("%d", current->value); 
        current = current->next;
-    } while (current != bi->head);
+    } while (current);
     printf("\n");
 }
 
