@@ -8,7 +8,6 @@ BIG_INT* subt(BIG_INT* bi1, BIG_INT* bi2) {
 
     DIGIT* c_big = bigger->tail;
     DIGIT* c_small = smaller->tail;
-    int carry = 0;
 
     do {
         if (!c_small) {
@@ -32,9 +31,9 @@ BIG_INT* subt(BIG_INT* bi1, BIG_INT* bi2) {
         }
         
         if (c_small)
-            c_small = c_small->prev == smaller->tail ? NULL : c_small->prev;
+            c_small = c_small->prev;
         c_big = c_big->prev;
-    } while(c_big != bigger->tail);
+    } while(c_big);
 
     return res;
 }
