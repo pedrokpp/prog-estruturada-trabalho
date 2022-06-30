@@ -10,6 +10,14 @@ BIG_INT* soma(BIG_INT* bi1, BIG_INT* bi2) {
     DIGIT* c_small = smaller->tail;
     int carry = 0;
 
+    if (bigger->head->value == 0) {
+        return smaller;
+    }
+    else if (smaller->head->value == 0) {
+        return bigger;
+    }
+    
+
     do {
         if (!c_small) {
             if (c_big->value != 0)
