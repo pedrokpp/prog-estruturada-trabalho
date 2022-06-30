@@ -312,7 +312,7 @@ void mult(BIG_INT* big1, BIG_INT* big2) {
 
 
     BIG_INT *resBigInt = parseString("0");
-    BIG_INT *tmp = parseString("1");
+    BIG_INT *tmp = parseString("1"); 
     /*
     char s[1024];
     for(int i = 0; i < resultCacheIdx; i++) {
@@ -330,3 +330,4 @@ void mult(BIG_INT* big1, BIG_INT* big2) {
     printNumber(res);
     //printNumber(tmp);
 }
+
