@@ -9,7 +9,7 @@ wget https://github.com/pedrokpp/prog-estruturada-trabalho/archive/refs/tags/ENT
 unzip ENTREGA.zip
 cd ENTREGA
 gcc -lm -o big_int big_int.c
-./big_int
+./big_int 
 ```
 
 ### Grupo: Pedro Kozlowski e Felipe Belletti
