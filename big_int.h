@@ -38,6 +38,7 @@ void append(BIG_INT* bi, int value) {
 
 // Coloca um elemento no início da lista
 void insert(BIG_INT* bi, int value) {
+    //printf("[DEBUG] inserindo %d na lista\n", value);
     DIGIT* d = newDigit(value);
     d->next = bi->head;
     if (bi->head != NULL) 

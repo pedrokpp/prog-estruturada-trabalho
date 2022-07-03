@@ -16,6 +16,7 @@ BIG_INT* soma(BIG_INT* bi1, BIG_INT* bi2) {
             insert(res, c_big->value);
         } else {
             int result = c_big->value + c_small->value + carry;
+            //printf("[SOMA] result: %d | c_big->value: %d | c_small->value: %d | carry: %d\n", result, c_big->value, c_small->value, carry);
             carry = 0;
             if (result >= 10) {
                 carry = floor(result / 10);
@@ -33,15 +34,19 @@ BIG_INT* soma(BIG_INT* bi1, BIG_INT* bi2) {
     } while(c_big);
         
 
+    /*
     printNumber(bigger);
     printf("+\n");
     printNumber(smaller);
     printf("---------\n");
     printNumber(res);
     printf("bigger length: %d\n", bigger->length);
-    printf("smaller length: %d\n", bigger->length);
+    printf("smaller length: %d\n", smaller->length);
     printf("res length: %d\n", res->length);
+    //printf("bigger addr: %p\n", bigger);
+    //printf("smaller addr: %p\n", smaller);
     printf("\n\n");
+    */
 
     /* // debug
     if(bi1->tail == NULL) {

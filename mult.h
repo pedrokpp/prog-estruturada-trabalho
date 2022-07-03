@@ -82,6 +82,16 @@ char *itoa(int num) {
     return strRet;
 }
 
+char * convertNumberIntoArray(unsigned int number) {
+    unsigned int length = (int)(log10((float)number)) + 1;
+    char * arr = (char *) malloc(length * sizeof(char)), * curr = arr;
+    do {
+        *curr++ = number % 10;
+        number /= 10;
+    } while (number != 0);
+    return arr;
+}
+
 void mult(BIG_INT* big1, BIG_INT* big2) {
     DIGIT* current1 = big1->tail;
     DIGIT* current2 = big2->tail;
@@ -124,15 +134,29 @@ void mult(BIG_INT* big1, BIG_INT* big2) {
         //printf("ON-EXEC: _array[%d] = %d * %d * %d\n", resultCacheIdx, lowFactor, casaLevel, iteratedLevel);
 
         //printf(">> insert %d\n", lowFactor);
-        insert(tempRes, lowFactor);
+
+        // bug fix
+        char *numArray = convertNumberIntoArray(lowFactor);
+        //printf("Numarray[0]: %d | Numarray[1]: %d | Numarray len: %d\n", numArray[0], numArray[1], strlen(numArray));
+        if(strlen(numArray) > 0) {
+            for(int i = 0; i < strlen(numArray); i++) {
+                insert(tempRes, numArray[i]);
+            }
+        } else {
+            insert(tempRes, lowFactor);
+        }
 
         for(int i = 0; i < iteratedLevel2; i++) {
-            printf(">>?? append 0, iteratedLevel2: %d\n", iteratedLevel2);
+            //printf(">>?? append 0, iteratedLevel2: %d\n", iteratedLevel2);
             append(tempRes, 0);
         }
 
         casaLevel *= 10;
         resultCacheIdx++;
+        for(int i = 0; i < casaLevel2; i++) {
+            //printf(">> append 0, casaLevel2: %d\n", casaLevel2);
+            append(tempRes, 0);
+        }
 
         printf("%d * %d = %d | lowFactor = %d | upFactor = %d | Inserindo %d na resposta\n", current1->value, current2->value, thisMultRes, lowFactor, upFactor, lowFactor);
         current1 = current1->prev;
@@ -142,18 +166,17 @@ void mult(BIG_INT* big1, BIG_INT* big2) {
             break;
         }
         if(current1 == NULL) { // iterou o elemento 1 inteiro
-            for(int i = 0; i < casaLevel2; i++) {
-                //printf(">> append 0, casaLevel2: %d\n", casaLevel2);
-                append(tempRes, 0);
-            }
             //printf("***** ZEROING OUT CASALEVEL2\n");
             casaLevel = 1; casaLevel2 = -1; // -1 por resolucao de bugs
-            printf("+++++++ INC. ITERATEDLEVEL2\n");
+            //printf("+++++++ INC. ITERATEDLEVEL2\n");
             iteratedLevel *= 10; iteratedLevel2 += 1;
             current1 = big1->tail;
             current2 = current2->prev;
             if(current2 == NULL) {
-                printf("SOMA FINAL\n");
+                printf("--- SOMA FINAL ---\n");
+                printf("tempRes: ");
+                printNumber(tempRes);
+                printf("\n");
                 res = soma(res, tempRes);
                 break;
             }
@@ -163,7 +186,10 @@ void mult(BIG_INT* big1, BIG_INT* big2) {
         casaLevel2 += 1;
 
         // RESET TEMPRES
-        printf("OUT: res->tail: %p | tempRes->tail: %p\n", res->tail, tempRes->tail);
+        //printf("OUT: res->tail: %p | tempRes->tail: %p\n", res->tail, tempRes->tail);
+        printf("tempRes: ");
+        printNumber(tempRes);
+        printf("\n");
         res = soma(res, tempRes);
 
         memset(tempRes, 0, sizeof(BIG_INT));
