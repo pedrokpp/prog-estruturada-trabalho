@@ -1,4 +1,5 @@
 
+#define DEBUG 0 
 #include "big_int.h"
 #include "soma.h"
 
@@ -9,77 +10,6 @@ int intArraySum(int _array[], int _arrayMax) {
         ret += _array[i];
     }
     return ret;
-}
-
-int bigIntArraySum(BIG_INT *_array[]) {
-    int ret = 0;
-    for(int i = 0; i < sizeof(_array); i++) {
-        ret += _array[i];
-    }
-    return ret;
-}
-
-void dumpBigIntArray(BIG_INT *_array) {
-    for(int i = 0; i < sizeof(_array); i++) {
-        DIGIT *tmp = _array[i].head;
-        printf("_array[%d].head = %s\n", i, tmp->value);
-    }
-}
-
-BIG_INT* getHigher(BIG_INT *b1, BIG_INT *b2) {
-    if(b1->length > b2->length) {
-        return b1;
-    }
-    if(b2->length > b1->length) {
-        return b2;
-    }
-
-    // equal
-    DIGIT *c1 = b1->head;
-    DIGIT *c2 = b2->head;
-    
-    for(int i = 0; i < b1->length ; i++) {
-        if(c1->value > c2->value) {
-            return b1;
-        }
-        if(c1->value < c2->value) {
-            return b2;
-        }
-
-        c1 = c1->next;
-        c2 = c2->next;
-    }
-}
-
-BIG_INT* getLower(BIG_INT *b1, BIG_INT *b2) {
-    if(b1->length > b2->length) {
-        return b1;
-    }
-    if(b2->length > b1->length) {
-        return b2;
-    }
-
-    // equal
-    DIGIT *c1 = b1->head;
-    DIGIT *c2 = b2->head;
-    
-    for(int i = 0; i < b1->length ; i++) {
-        if(c1->value > c2->value) {
-            return b2;
-        }
-        if(c1->value < c2->value) {
-            return b1;
-        }
-
-        c1 = c1->next;
-        c2 = c2->next;
-    }
-}
-
-char *itoa(int num) {
-    char strRet[1024];
-    sprintf(strRet, "%d", num);
-    return strRet;
 }
 
 char * convertNumberIntoArray(unsigned int number) {
@@ -108,19 +38,16 @@ void mult(BIG_INT* big1, BIG_INT* big2) {
     res = parseString("");
 
     do {
-        //printf("c1->value: %d |\n", current1->value);
-        //printf("c2->value: %d |\n", current2->value);
         lowFactor = thisMultRes = current1->value * current2->value;
 
         if(upFactor > 0) {
-            printf("Usando o upFactor...\n");
+            //printf("Usando o upFactor...\n");
             thisMultRes += upFactor;
             lowFactor += upFactor;
             upFactor = 0;
         }
 
         if(thisMultRes >= 10) {
-            //lowFactor = thisMultRes % 10;
             if(current1 == big1->head) {
                 printf("Ja estamos no ultimo elemento, devo por TUDO\n");
                 lowFactor = thisMultRes;
