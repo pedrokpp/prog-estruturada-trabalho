@@ -83,7 +83,7 @@ void freeNumber(BIG_INT* bi) {
             DIGIT* tmp = current;
             current = current->next;
             free(tmp);
-        } while (current != bi->tail);
+        } while (current);
         free(bi);
     }
 }

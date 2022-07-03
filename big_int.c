@@ -1,6 +1,7 @@
 #include "big_int.h"
 #include "soma.h"
 #include "subt.h"
+#include "mult.h"
 
 int main(void){
   while (1) {
@@ -19,7 +20,7 @@ int main(void){
     BIG_INT *num1 = parseString(str1), *num2 = parseString(str2), *resp;
     if (op == '+') resp = soma(num1, num2);
     else if (op == '-') resp = subt(num1, num2);
-    // else if(op == '*') resp = mult(num1, num2);
+    else /*if(op == '*')*/ resp = mult(num1, num2);
     // else if(op == '/') resp = div(num1, num2);
     // else resp = mod(num1, num2);
 
