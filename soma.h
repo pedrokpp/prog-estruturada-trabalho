@@ -12,19 +12,29 @@ BIG_INT* soma(BIG_INT* bi1, BIG_INT* bi2) {
     
     do {
         if (!c_small) {
-            //if (c_big->value != 0)
-            insert(res, c_big->value);
+            if (carry > 0) {
+                int result = c_big->value + carry;  
+                carry = 0;
+                if (result >= 10) {
+                    carry = floor(result / 10);
+                    result = result % 10;
+                }
+                insert(res, result);
+                if (!c_big->prev && carry != 0)
+                    insert(res, carry);
+            } else {
+                if (c_big->value != 0)
+                    insert(res, c_big->value);
+            }
         } else {
             int result = c_big->value + c_small->value + carry;
-            //printf("[SOMA] result: %d | c_big->value: %d | c_small->value: %d | carry: %d\n", result, c_big->value, c_small->value, carry);
             carry = 0;
             if (result >= 10) {
                 carry = floor(result / 10);
                 result = result % 10;
             }
-            
             insert(res, result);
-            if (c_small == smaller->head && c_small->value != 0 && carry != 0)
+            if (!c_small->prev && !c_big->prev && carry != 0)
                 insert(res, carry);
         }
         
