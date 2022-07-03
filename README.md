@@ -6,8 +6,8 @@ Operações válidas: soma (+), subtração (-), multiplicação (*)
 ## Descompactar e compilar
 ```
 wget https://github.com/pedrokpp/prog-estruturada-trabalho/archive/refs/tags/ENTREGA.zip
-unzip ENTREGA.zip
-cd ENTREGA
+unzip prog-estruturada-trabalho-ENTREGA.zip
+cd prog-estruturada-trabalho-ENTREGA
 gcc -lm -o big_int big_int.c
 ./big_int 
 ```
